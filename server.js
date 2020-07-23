@@ -12,6 +12,7 @@ connectDB();
 
 //middleware file
 const logger = require('./middleware/logger');
+const errorHandler = require('./middleware/error');
 
 //Route files
 const bootcamps = require('./routes/bootcamps');
@@ -28,6 +29,8 @@ if (process.env.NODE_ENV === 'development') {
 
 //Mount Routes
 app.use('/api/v1/bootcamps', bootcamps);
+
+app.use(errorHandler);
 
 //accessing env variable using process.env
 const PORT = process.env.PORT || 5000;
