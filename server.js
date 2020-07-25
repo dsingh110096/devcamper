@@ -11,7 +11,6 @@ dotenv.config({ path: './config/config.env' });
 connectDB();
 
 //middleware file
-const logger = require('./middleware/logger');
 const errorHandler = require('./middleware/error');
 
 //Route files
