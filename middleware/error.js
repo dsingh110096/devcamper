@@ -6,7 +6,7 @@ const errorHandler = (err, req, res, next) => {
   error.message = err.message;
 
   //Loging to the console for dev
-  console.log(err.name);
+  console.log(err);
 
   //Mongoose bad ObjectId
   if (err.name === 'CastError') {
@@ -16,7 +16,9 @@ const errorHandler = (err, req, res, next) => {
 
   //Mongoose duplicate key
   if (err.code === 11000) {
-    const message = 'Bootcamp already exists with same name';
+    const message = `Resouce with ${Object.keys(err.keyValue)}: ${Object.values(
+      err.keyValue
+    )}, already exists.`;
     error = new ErrorResponse(message, 400);
   }
 
