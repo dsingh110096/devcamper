@@ -4,7 +4,7 @@ const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 
 //Bootcamp Model file
-const Bootcamp = require('../models/Bootcamps');
+const Bootcamp = require('../models/Bootcamp');
 const geocoder = require('../utils/geocoder');
 
 //@desc     Get all bootcamps
