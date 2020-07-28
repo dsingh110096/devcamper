@@ -13,27 +13,21 @@ const Bootcamp = require('../models/Bootcamp');
 //access    public
 
 exports.getCourses = asyncHandler(async (req, res, next) => {
-  let query;
   //Get course with specific bootcampId
   if (req.params.bootcampId) {
-    query = Course.find({ bootcamp: req.params.bootcampId }).populate({
-      path: 'bootcamp',
-      select: 'name description',
+    const courses = await Course.find({
+      bootcamp: req.params.bootcampId,
+    });
+
+    res.status(200).json({
+      success: true,
+      count: courses.length,
+      data: courses,
     });
   } else {
     //if no bootcampId then show all courses
-    //populate method will show bootcamp details as we want like name and description,
-    query = Course.find().populate({
-      path: 'bootcamp',
-      select: 'name description',
-    });
+    res.status(200).json(res.advancedResults);
   }
-  const courses = await query;
-  res.status(200).json({
-    success: true,
-    count: courses.length,
-    data: courses,
-  });
 });
 
 //@desc     Get a single couse
