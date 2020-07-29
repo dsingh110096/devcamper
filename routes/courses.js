@@ -28,7 +28,13 @@ router
   .post(protect, authorize('publisher', 'admin'), addCourse);
 router
   .route('/:id')
-  .get(getCourse)
+  .get(
+    advancedResults(Course, {
+      path: 'bootcamp',
+      select: 'name description',
+    }),
+    getCourse
+  )
   .put(protect, authorize('publisher', 'admin'), updateCourse)
   .delete(protect, authorize('publisher', 'admin'), deleteCourse);
 

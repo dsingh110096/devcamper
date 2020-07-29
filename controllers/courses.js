@@ -34,10 +34,7 @@ exports.getCourses = asyncHandler(async (req, res, next) => {
 //route     GET /api/v1/course/:id
 //access    public
 exports.getCourse = asyncHandler(async (req, res, next) => {
-  const course = await Course.findById(req.params.id).populate({
-    path: 'bootcamp',
-    select: 'name description',
-  });
+  const course = await Course.findById(req.params.id);
 
   if (!course) {
     return next(
@@ -56,6 +53,7 @@ exports.getCourse = asyncHandler(async (req, res, next) => {
 //access    Private
 exports.addCourse = asyncHandler(async (req, res, next) => {
   req.body.bootcamp = req.params.bootcampId;
+  req.body.user = req.user.id;
   const bootcamp = await Bootcamp.findById(req.params.bootcampId);
 
   if (!bootcamp) {

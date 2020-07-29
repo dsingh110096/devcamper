@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 //Middleware file
 const advancedResults = require('../middleware/advancedResults');
-const { protect, authorize, owner } = require('../middleware/auth');
+const { protect, authorize } = require('../middleware/auth');
 //Model file
 const Bootcamp = require('../models/Bootcamp');
 
@@ -29,7 +29,7 @@ router.route('/radius/:zipcode/:distance').get(getBootcampsInRadius);
 //route for bootcampPhotoUpload
 router
   .route('/:id/photo')
-  .put(protect, authorize('publisher', 'admin'), owner, bootcampPhotoUpload);
+  .put(protect, authorize('publisher', 'admin'), bootcampPhotoUpload);
 
 //routes for getBootcamps & createBootcamp.
 router
@@ -41,7 +41,7 @@ router
 router
   .route('/:id')
   .get(getBootcamp)
-  .put(protect, authorize('publisher', 'admin'), owner, updateBootcamp)
-  .delete(protect, authorize('publisher', 'admin'), owner, deleteBootcamp);
+  .put(protect, authorize('publisher', 'admin'), updateBootcamp)
+  .delete(protect, authorize('publisher', 'admin'), deleteBootcamp);
 
 module.exports = router;

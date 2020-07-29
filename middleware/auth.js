@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const asyncHandler = require('./async');
 const ErrorResponse = require('../utils/errorResponse');
 const User = require('../models/User');
-const Bootcamp = require('../models/Bootcamp');
 
 //Protect routes
 exports.protect = asyncHandler(async (req, res, next) => {
@@ -28,7 +27,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
   try {
     //Verify Token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    //currently logedIn user
+    //currently logedIn user(we access it in any route)
     req.user = await User.findById(decoded.id);
     next();
   } catch (err) {
@@ -51,16 +50,3 @@ exports.authorize = (...roles) => {
     next();
   };
 };
-//Make sure user owns the bootcamp
-exports.owner = asyncHandler(async (req, res, next) => {
-  const bootcamp = await Bootcamp.findById(req.params.id);
-  if (bootcamp.user.toString() !== req.user.id && req.user.roll !== 'admin') {
-    return next(
-      new ErrorResponse(
-        `User with id of ${req.user.id} is not authorized to do this action`,
-        401
-      )
-    );
-  }
-  next();
-});
