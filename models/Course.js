@@ -80,4 +80,4 @@ CourseSchema.post('remove', function () {
   this.constructor.getAverageCost(this.bootcamp);
 });
 
-module.exports = mongoose.model('Course', CourseSchema);
+module.exports = mongoose.model('course', CourseSchema);
