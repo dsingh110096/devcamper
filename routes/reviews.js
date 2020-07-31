@@ -8,7 +8,7 @@ const Review = require('../models/Review');
 
 //Controller files
 //reviews controller
-const { getReviews } = require('../controllers/reviews');
+const { getReviews, getReview } = require('../controllers/reviews');
 router.route('/').get(
   advancedResults(Review, {
     path: 'bootcamp',
@@ -16,5 +16,7 @@ router.route('/').get(
   }),
   getReviews
 );
+
+router.route('/:id').get(getReview);
 
 module.exports = router;
