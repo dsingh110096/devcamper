@@ -146,6 +146,7 @@ BootcampSchema.pre('remove', async function (next) {
 });
 
 //reverse populate with virtuals(kind of realtionship foreindkey concept)
+//showing courses associated with a bootcamp
 BootcampSchema.virtual('courses', {
   ref: 'Course',
   localField: '_id',
