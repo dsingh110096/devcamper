@@ -20,8 +20,10 @@ const {
 
 //Include other resource routers
 const courseRoute = require('./courses');
+const reviewRoute = require('./reviews');
 //Re-route into other resouces router
 router.use('/:bootcampId/courses', courseRoute);
+router.use('/:bootcampId/reviews', reviewRoute);
 
 //route for getBootcampsInRadius
 router.route('/radius/:zipcode/:distance').get(getBootcampsInRadius);
