@@ -54,7 +54,7 @@ ReviewSchema.statics.getAverageRating = async function (bootcampId) {
   //saving averageRating to the database
   try {
     await this.model('Bootcamp').findByIdAndUpdate(bootcampId, {
-      averageRating: arr[0].averageRating,
+      averageRating: (Math.floor(arr[0].averageRating * 100) / 100).toFixed(1),
     });
   } catch (err) {
     console.error(err);
