@@ -13,10 +13,12 @@ const {
   resetPassword,
   updateMe,
   updatePassword,
+  logout,
 } = require('../controllers/auth');
 
 router.route('/register').post(register);
 router.route('/login').post(login);
+router.route('/logout').get(protect, logout);
 router.route('/me').get(protect, getMe);
 router.route('/updateme').put(protect, updateMe);
 router.route('/updatepassword').put(protect, updatePassword);
