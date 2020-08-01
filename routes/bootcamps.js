@@ -36,7 +36,7 @@ router
 //routes for getBootcamps & createBootcamp.
 router
   .route('/')
-  .get(advancedResults(Bootcamp, 'courses'), getBootcamps)
+  .get(advancedResults(Bootcamp, 'courses reviews'), getBootcamps)
   .post(protect, authorize('publisher', 'admin'), createBootcamp);
 
 //routes for singleGetBootcamp, updateBootcamp & deleteBootcamp.
