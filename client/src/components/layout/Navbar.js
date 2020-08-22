@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <nav className='navbar navbar-expand-md navbar-dark bg-primary fixed-top'>
+    <nav className='navbar navbar-expand-md navbar-dark bg-primary sticky-top'>
       <div className='container'>
         <Link className='navbar-brand' to='/'>
           <i className='fas fa-laptop-code'></i> DevCamper
