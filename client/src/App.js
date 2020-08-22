@@ -1,11 +1,17 @@
-import React from 'react';
-import './App.css';
-
+import './css/bootstrap.css';
+import './css/style.css';
+import React, { Fragment } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Navbar from './components/layout/Navbar';
+import Landing from './components/layout/Landing';
 function App() {
   return (
-    <div className='App'>
-      <h1>Welcome To DevCamper.Com</h1>
-    </div>
+    <Router>
+      <Fragment>
+        <Navbar />
+        <Route exact path='/' component={Landing} />
+      </Fragment>
+    </Router>
   );
 }
 
