@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
 import scrollToTop from '../../utils/scrollToTop';
 
-const Register = ({ setAlert }) => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: '',
     password: '',
@@ -19,22 +20,17 @@ const Register = ({ setAlert }) => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    if (
-      name === '' ||
-      password === '' ||
-      password2 === '' ||
-      email === '' ||
-      role === ''
-    ) {
-      scrollToTop();
-      setAlert('Please provide the all inputs', 'danger');
-    } else if (password !== password2) {
+    if (password !== password2) {
       scrollToTop();
       setAlert('Password do not match', 'danger');
     } else {
-      console.log(formData);
+      register({ name, email, password, role });
     }
   };
+  //If isAuthenticated
+  if (isAuthenticated) {
+    return <Redirect to='/bootcamps' />;
+  }
   return (
     <section className='form mt-5'>
       <div className='container'>
@@ -64,7 +60,7 @@ const Register = ({ setAlert }) => {
                   <div className='form-group'>
                     <label htmlFor='email'>Email Address</label>
                     <input
-                      type='email'
+                      type='text'
                       name='email'
                       className='form-control'
                       placeholder='Enter email'
@@ -149,6 +145,12 @@ const Register = ({ setAlert }) => {
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
-export default connect(null, { setAlert })(Register);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { setAlert, register })(Register);

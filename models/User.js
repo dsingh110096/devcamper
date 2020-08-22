@@ -19,13 +19,13 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'publisher'],
+    enum: { values: ['user', 'publisher'], message: 'role is required' },
     default: 'user',
   },
   password: {
     type: String,
     required: [true, 'Please add a password'],
-    minlength: 6,
+    minlength: [6, 'Please add a password of atleast 6 characters'],
     select: false,
   },
   resetPasswordToken: String,
