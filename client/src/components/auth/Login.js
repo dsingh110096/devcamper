@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import scrollToTop from '../../utils/scrollToTop';
 import { setAlert } from '../../actions/alert';
+import { login } from '../../actions/auth';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const Login = ({ setAlert }) => {
+const Login = ({ setAlert, login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -19,9 +20,13 @@ const Login = ({ setAlert }) => {
       scrollToTop();
       setAlert('Please provide email & password', 'danger');
     } else {
-      console.log(formData);
+      login({ email, password });
     }
   };
+  //Redirect if loged in
+  if (isAuthenticated) {
+    return <Redirect to='/bootcamps' />;
+  }
   return (
     <section className='form mt-5'>
       <div className='container'>
@@ -86,6 +91,12 @@ const Login = ({ setAlert }) => {
 
 Login.propTypes = {
   setAlert: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
-export default connect(null, { setAlert })(Login);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { setAlert, login })(Login);
