@@ -154,7 +154,7 @@ BootcampSchema.virtual('courses', {
   justOne: false,
 });
 //reverse populate with virtuals(kind of realtionship foreindkey concept)
-//showing courses associated with a bootcamp
+//showing reviews associated with a bootcamp
 BootcampSchema.virtual('reviews', {
   ref: 'Review',
   localField: '_id',
