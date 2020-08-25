@@ -1,4 +1,8 @@
-import { GET_ALL_BOOTCAMPS, BOOTCAMP_ERROR } from '../actions/types';
+import {
+  GET_ALL_BOOTCAMPS,
+  BOOTCAMP_ERROR,
+  GET_SINGLE_BOOTCAMP,
+} from '../actions/types';
 
 const initialState = {
   bootcamps: [],
@@ -13,6 +17,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         bootcamps: payload,
+        loading: false,
+      };
+    case GET_SINGLE_BOOTCAMP:
+      return {
+        ...state,
+        bootcamp: payload.data,
         loading: false,
       };
     case BOOTCAMP_ERROR:

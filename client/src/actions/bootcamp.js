@@ -1,4 +1,8 @@
-import { GET_ALL_BOOTCAMPS, BOOTCAMP_ERROR } from './types';
+import {
+  GET_ALL_BOOTCAMPS,
+  GET_SINGLE_BOOTCAMP,
+  BOOTCAMP_ERROR,
+} from './types';
 import axios from 'axios';
 
 export const getAllBootcamps = () => async (dispatch) => {
@@ -6,6 +10,17 @@ export const getAllBootcamps = () => async (dispatch) => {
     const res = await axios.get('/api/v1/bootcamps');
     dispatch({
       type: GET_ALL_BOOTCAMPS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({ type: BOOTCAMP_ERROR });
+  }
+};
+export const getSingleBootcamp = (bootcampId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/v1/bootcamps/${bootcampId}`);
+    dispatch({
+      type: GET_SINGLE_BOOTCAMP,
       payload: res.data,
     });
   } catch (err) {

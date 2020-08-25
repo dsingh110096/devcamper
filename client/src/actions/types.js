@@ -9,4 +9,5 @@ export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGOUT = 'LOGOUT';
 export const LOGOUT_ERROR = 'LOGOUT_ERROR';
 export const GET_ALL_BOOTCAMPS = 'GET_ALL_BOOTCAMPS';
+export const GET_SINGLE_BOOTCAMP = 'GET_SINGLE_BOOTCAMP';
 export const BOOTCAMP_ERROR = 'BOOTCAMP_ERROR';
