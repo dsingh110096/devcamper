@@ -56,7 +56,7 @@ app.use(xss());
 app.use(hpp());
 
 //Set static folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public/uploads')));
 
 //Mount Routes
 app.use('/api/v1/bootcamps', bootcamps);

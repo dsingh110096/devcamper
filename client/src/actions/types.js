@@ -8,3 +8,5 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGOUT = 'LOGOUT';
 export const LOGOUT_ERROR = 'LOGOUT_ERROR';
+export const GET_ALL_BOOTCAMPS = 'GET_ALL_BOOTCAMPS';
+export const BOOTCAMP_ERROR = 'BOOTCAMP_ERROR';
