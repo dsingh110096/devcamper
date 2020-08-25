@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getAllBootcamps } from '../../actions/bootcamp';
 import SearchSideBar from './SearchSideBar';
 import Pagination from './Pagination';
+import Spinner from '../layout/Spinner';
 const Bootcamps = ({ bootcamp: { bootcamps, loading }, getAllBootcamps }) => {
   useEffect(() => {
     getAllBootcamps();
@@ -16,7 +17,7 @@ const Bootcamps = ({ bootcamp: { bootcamps, loading }, getAllBootcamps }) => {
         <div className='row'>
           <SearchSideBar />
           {bootcamps.data === undefined ? (
-            ''
+            <Spinner />
           ) : (
             <div className='col-md-8'>
               {bootcamps.data.map((bootcamp) => (
@@ -32,7 +33,7 @@ const Bootcamps = ({ bootcamp: { bootcamps, loading }, getAllBootcamps }) => {
                     <div className='col-md-8'>
                       <div className='card-body'>
                         <h5 className='card-title'>
-                          <Link to='/bootcamp'>
+                          <Link to={`/bootcamps/${bootcamp._id}`}>
                             {bootcamp.name}
                             <span className='float-right badge badge-success'>
                               {bootcamp.averageRating && bootcamp.averageRating}
