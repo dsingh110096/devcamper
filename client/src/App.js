@@ -6,6 +6,7 @@ import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import Bootcamps from './components/bootcamp/Bootcamps';
+import Bootcamp from './components/bootcamp/Bootcamp';
 import Login from './components/auth/Login';
 import Alert from './components/layout/Alert';
 import { loadUser } from './actions/auth';
@@ -36,6 +37,7 @@ function App() {
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/bootcamps' component={Bootcamps} />
+              <Route exact path='/bootcamps/:bootcampId' component={Bootcamp} />
             </Switch>
           </section>
         </Fragment>
