@@ -19,7 +19,9 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
 //route     GET /api/v1/bootcamps/:id
 //access    public
 exports.getBootcamp = asyncHandler(async (req, res, next) => {
-  const bootcamp = await Bootcamp.findById(req.params.id);
+  const bootcamp = await Bootcamp.findById(req.params.id).populate({
+    path: 'courses',
+  });
   if (!bootcamp) {
     return next(
       new ErrorResponse(`Bootcamp with id of ${req.params.id} not found`, 404)
@@ -188,7 +190,7 @@ exports.bootcampPhotoUpload = asyncHandler(async (req, res, next) => {
     await Bootcamp.findByIdAndUpdate(req.params.id, { photo: file.name });
     res.status(200).json({
       success: true,
-      data: file.name,
+      data: bootcamp,
     });
   });
 });
