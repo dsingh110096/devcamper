@@ -7,8 +7,11 @@ import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import Bootcamps from './components/bootcamp/Bootcamps';
 import Bootcamp from './components/bootcamp/Bootcamp';
+import Reviews from './components/reviews/Reviews';
+import AddReview from './components/reviews/AddReview';
 import Login from './components/auth/Login';
 import Alert from './components/layout/Alert';
+import PrivateRoute from './components/routing/PrivateRoute';
 import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 
@@ -38,6 +41,12 @@ function App() {
               <Route exact path='/login' component={Login} />
               <Route exact path='/bootcamps' component={Bootcamps} />
               <Route exact path='/bootcamps/:bootcampId' component={Bootcamp} />
+              <Route exact path='/reviews/:bootcampId' component={Reviews} />
+              <PrivateRoute
+                exact
+                path='/add-review/:bootcampId'
+                component={AddReview}
+              />
             </Switch>
           </section>
         </Fragment>
