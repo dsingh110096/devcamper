@@ -18,6 +18,7 @@ import setAuthToken from './utils/setAuthToken';
 //Redux Store files
 import { Provider } from 'react-redux';
 import store from './store';
+import BootcampsInRadius from './components/bootcamp/BootcampsInRadius';
 
 //Check if token in localStorage and set it to the header
 if (localStorage.token) {
@@ -40,6 +41,11 @@ function App() {
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/bootcamps' component={Bootcamps} />
+              <Route
+                exact
+                path='/bootcamps/:zipcode/:distance'
+                component={BootcampsInRadius}
+              />
               <Route exact path='/bootcamps/:bootcampId' component={Bootcamp} />
               <Route exact path='/reviews/:bootcampId' component={Reviews} />
               <PrivateRoute

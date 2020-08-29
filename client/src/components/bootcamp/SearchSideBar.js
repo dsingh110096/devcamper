@@ -1,18 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { getBootcampInRadius } from '../../actions/bootcamp';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-const SearchSideBar = () => {
+const SearchSideBar = ({ getBootcampInRadius }) => {
+  const [formData, setFormData] = useState({
+    zipcode: '',
+    distance: '',
+  });
+
+  const { zipcode, distance } = formData;
+
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    getBootcampInRadius({ zipcode, distance });
+    setFormData({ zipcode: '', distance: '' });
+  };
+
   return (
     <div className='col-md-4'>
       <div className='card card-body mb-4'>
         <h4 className='mb-3'>By Location</h4>
-        <form>
+        <form onSubmit={onSubmit}>
           <div className='row'>
             <div className='col-md-6'>
               <div className='form-group'>
                 <input
                   type='text'
                   className='form-control'
-                  name='miles'
+                  name='distance'
+                  value={distance}
+                  onChange={onChange}
                   placeholder='Miles From'
                 />
               </div>
@@ -23,6 +44,8 @@ const SearchSideBar = () => {
                   type='text'
                   className='form-control'
                   name='zipcode'
+                  value={zipcode}
+                  onChange={onChange}
                   placeholder='Enter Zipcode'
                 />
               </div>
@@ -38,21 +61,6 @@ const SearchSideBar = () => {
 
       <h4>Filter</h4>
       <form>
-        {/* <div className='form-group'>
-          <label> Career</label>
-          <select className='custom-select mb-2'>
-            <option value='any' defaultValue>
-              Any
-            </option>
-            <option value='Web Development'>Web Development</option>
-            <option value='Mobile Development'>Mobile Development</option>
-            <option value='UI/UX'>UI/UX</option>
-            <option value='Data Science'>Data Science</option>
-            <option value='Business'>Business</option>
-            <option value='Other'>Other</option>
-          </select>
-        </div> */}
-
         <div className='form-group'>
           <label> Rating</label>
           <select className='custom-select mb-2'>
@@ -95,4 +103,8 @@ const SearchSideBar = () => {
   );
 };
 
-export default SearchSideBar;
+SearchSideBar.propTypes = {
+  getBootcampInRadius: PropTypes.func.isRequired,
+};
+
+export default connect(null, { getBootcampInRadius })(SearchSideBar);
