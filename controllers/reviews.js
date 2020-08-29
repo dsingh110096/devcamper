@@ -16,6 +16,9 @@ exports.getReviews = asyncHandler(async (req, res, next) => {
   if (req.params.bootcampId) {
     const reviews = await Review.find({
       bootcamp: req.params.bootcampId,
+    }).populate({
+      path: 'bootcamp user',
+      select: 'name description',
     });
 
     res.status(200).json({
