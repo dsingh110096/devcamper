@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const BootcampSideBar = ({
   bootcamp: {
@@ -25,12 +26,12 @@ const BootcampSideBar = ({
         Rating
       </h1>
 
-      <a href='reviews.html' className='btn btn-dark btn-block my-3'>
+      <Link to={`/reviews/${_id}`} className='btn btn-dark btn-block my-3'>
         <i className='fas fa-comments'></i> Read Reviews
-      </a>
-      <a href='add-review.html' className='btn btn-light btn-block my-3'>
+      </Link>
+      <Link to={`/add-review/${_id}`} className='btn btn-light btn-block my-3'>
         <i className='fas fa-pencil-alt'></i> Write a Review
-      </a>
+      </Link>
       <a
         href={website}
         target='_blank'
