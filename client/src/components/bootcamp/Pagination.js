@@ -1,34 +1,26 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Pagination = () => {
+const Pagination = ({ itemPerPage, totalItems, paginate }) => {
+  const pageNumbers = [];
+  const condition = Math.ceil(totalItems / itemPerPage);
+  for (let i = 1; i <= condition; i++) {
+    pageNumbers.push(i);
+  }
   return (
-    <nav aria-label='Page navigation example'>
+    <nav>
       <ul className='pagination'>
-        <li className='page-item'>
-          <a className='page-link' href='!#'>
-            Previous
-          </a>
-        </li>
-        <li className='page-item'>
-          <a className='page-link' href='!#'>
-            1
-          </a>
-        </li>
-        <li className='page-item'>
-          <a className='page-link' href='!#'>
-            2
-          </a>
-        </li>
-        <li className='page-item'>
-          <a className='page-link' href='!#'>
-            3
-          </a>
-        </li>
-        <li className='page-item'>
-          <a className='page-link' href='!#'>
-            Next
-          </a>
-        </li>
+        {pageNumbers.map((number) => (
+          <li key={number} className='page-item'>
+            <Link
+              className='page-link'
+              onClick={() => paginate(number)}
+              to={`?page=${number}`}
+            >
+              {number}
+            </Link>
+          </li>
+        ))}
       </ul>
     </nav>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -7,7 +7,7 @@ import SearchSideBar from './SearchSideBar';
 import Pagination from './Pagination';
 import Spinner from '../layout/Spinner';
 const Bootcamps = ({
-  bootcamp: { bootcamps, loading },
+  bootcamp: { bootcamps, loading, pagination },
   getAllBootcamps,
   getBootcampInRadius,
   showSearchBar,
@@ -21,6 +21,20 @@ const Bootcamps = ({
       getBootcampInRadius({ zipcode, distance });
     }
   }, [getAllBootcamps, getBootcampInRadius, zipcode, distance, showSearchBar]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [bootcampsPerPage] = useState(3);
+
+  //Get current Bootcamps
+  const indexOfLastBootcamp = currentPage * bootcampsPerPage;
+  const indexOfFirstBootcamp = indexOfLastBootcamp - bootcampsPerPage;
+  const currentBootcamps =
+    bootcamps.data === undefined
+      ? ''
+      : bootcamps.data.slice(indexOfFirstBootcamp, indexOfLastBootcamp);
+  //change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <section className='browse my-5'>
       <div className='container'>
@@ -35,7 +49,7 @@ const Bootcamps = ({
                   No Bootcamps To show
                 </h1>
               ) : (
-                bootcamps.data.map((bootcamp) => (
+                currentBootcamps.map((bootcamp) => (
                   <div className='card mb-3' key={bootcamp._id}>
                     <div className='row no-gutters'>
                       <div className='col-md-4'>
@@ -69,7 +83,11 @@ const Bootcamps = ({
                   </div>
                 ))
               )}
-              <Pagination />
+              <Pagination
+                itemPerPage={bootcampsPerPage}
+                totalItems={bootcamps.data.length}
+                paginate={paginate}
+              />
             </div>
           )}
         </div>

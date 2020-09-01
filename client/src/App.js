@@ -43,11 +43,6 @@ function App() {
               <Route exact path='/bootcamps' component={Bootcamps} />
               <Route
                 exact
-                path='/bootcamps?page=:pageNo'
-                component={Bootcamps}
-              />
-              <Route
-                exact
                 path='/bootcamps/:zipcode/:distance'
                 component={BootcampsInRadius}
               />
