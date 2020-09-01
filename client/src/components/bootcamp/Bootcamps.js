@@ -21,7 +21,6 @@ const Bootcamps = ({
       getBootcampInRadius({ zipcode, distance });
     }
   }, [getAllBootcamps, getBootcampInRadius, zipcode, distance, showSearchBar]);
-
   return (
     <section className='browse my-5'>
       <div className='container'>
@@ -31,38 +30,45 @@ const Bootcamps = ({
             <Spinner />
           ) : (
             <div className={showSearchBar ? 'col-md-8' : 'col-md-12'}>
-              {bootcamps.data.map((bootcamp) => (
-                <div className='card mb-3' key={bootcamp._id}>
-                  <div className='row no-gutters'>
-                    <div className='col-md-4'>
-                      <img
-                        src={`/${bootcamp.photo}`}
-                        className='card-img'
-                        alt={bootcamp.name}
-                      />
-                    </div>
-                    <div className='col-md-8'>
-                      <div className='card-body'>
-                        <h5 className='card-title'>
-                          <Link to={`/bootcamps/${bootcamp._id}`}>
-                            {bootcamp.name}
-                            <span className='float-right badge badge-success'>
-                              {bootcamp.averageRating && bootcamp.averageRating}
-                            </span>
-                          </Link>
-                        </h5>
-                        <span className='badge badge-dark mb-2'>
-                          {bootcamp.location.city},{' '}
-                          {bootcamp.location.stateCode}
-                        </span>
-                        <p className='card-text'>
-                          {bootcamp.careers.join(', ')}
-                        </p>
+              {bootcamps.data.length === 0 ? (
+                <h1 className='bg-primary text-white p-2 text-center'>
+                  No Bootcamps To show
+                </h1>
+              ) : (
+                bootcamps.data.map((bootcamp) => (
+                  <div className='card mb-3' key={bootcamp._id}>
+                    <div className='row no-gutters'>
+                      <div className='col-md-4'>
+                        <img
+                          src={`/${bootcamp.photo}`}
+                          className='card-img'
+                          alt={bootcamp.name}
+                        />
+                      </div>
+                      <div className='col-md-8'>
+                        <div className='card-body'>
+                          <h5 className='card-title'>
+                            <Link to={`/bootcamps/${bootcamp._id}`}>
+                              {bootcamp.name}
+                              <span className='float-right badge badge-success'>
+                                {bootcamp.averageRating &&
+                                  bootcamp.averageRating}
+                              </span>
+                            </Link>
+                          </h5>
+                          <span className='badge badge-dark mb-2'>
+                            {bootcamp.location.city},{' '}
+                            {bootcamp.location.stateCode}
+                          </span>
+                          <p className='card-text'>
+                            {bootcamp.careers.join(', ')}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
               <Pagination />
             </div>
           )}

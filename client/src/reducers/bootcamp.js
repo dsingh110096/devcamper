@@ -3,6 +3,8 @@ import {
   BOOTCAMP_ERROR,
   GET_SINGLE_BOOTCAMP,
   GET_BOOTCAMP_IN_RADIUS,
+  FITERED_BOOTCAMPS,
+  PAGINATED_BOOTCAMPS,
   CLEAR_BOOTCAMPS,
 } from '../actions/types';
 
@@ -16,12 +18,9 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case GET_BOOTCAMP_IN_RADIUS:
-      return {
-        ...state,
-        bootcamps: payload,
-        loading: false,
-      };
+    case FITERED_BOOTCAMPS:
     case GET_ALL_BOOTCAMPS:
+    case PAGINATED_BOOTCAMPS:
       return {
         ...state,
         bootcamps: payload,

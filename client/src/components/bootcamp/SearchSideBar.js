@@ -1,13 +1,26 @@
 import React, { useState } from 'react';
-import { getBootcampInRadius } from '../../actions/bootcamp';
+import { getBootcampInRadius, filteredBootcamps } from '../../actions/bootcamp';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { setAlert } from '../../actions/alert';
+import scrollToTop from '../../utils/scrollToTop';
 
-const SearchSideBar = ({ getBootcampInRadius }) => {
+const SearchSideBar = ({
+  getBootcampInRadius,
+  setAlert,
+  filteredBootcamps,
+}) => {
   const [formData, setFormData] = useState({
     zipcode: '',
     distance: '',
   });
+
+  const [filterData, setFilterData] = useState({
+    averageRating: '',
+    averageCost: '',
+  });
+
+  const { averageRating, averageCost } = filterData;
 
   const { zipcode, distance } = formData;
 
@@ -16,8 +29,26 @@ const SearchSideBar = ({ getBootcampInRadius }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    getBootcampInRadius({ zipcode, distance });
-    setFormData({ zipcode: '', distance: '' });
+    if (zipcode === '' || distance === '') {
+      scrollToTop();
+      setAlert('Please provide zipcode and distance.', 'danger');
+    } else {
+      getBootcampInRadius({ zipcode, distance });
+      setFormData({ zipcode: '', distance: '' });
+    }
+  };
+  const onChangeFilter = (e) =>
+    setFilterData({ ...filterData, [e.target.name]: e.target.value });
+
+  const onSubmitFilter = (e) => {
+    e.preventDefault();
+    if (averageCost === '' || averageRating === '') {
+      scrollToTop();
+      setAlert('Please choose rating and budget', 'danger');
+    } else {
+      filteredBootcamps({ averageRating, averageCost });
+      setFilterData({ averageRating: '', averageCost: '' });
+    }
   };
 
   return (
@@ -60,12 +91,17 @@ const SearchSideBar = ({ getBootcampInRadius }) => {
       </div>
 
       <h4>Filter</h4>
-      <form>
+      <form onSubmit={onSubmitFilter}>
         <div className='form-group'>
           <label> Rating</label>
-          <select className='custom-select mb-2'>
-            <option value='any' defaultValue>
-              Any
+          <select
+            className='custom-select mb-2'
+            name='averageRating'
+            value={averageRating}
+            onChange={onChangeFilter}
+          >
+            <option value='choose' defaultValue>
+              Choose
             </option>
             <option value='9'>9+</option>
             <option value='8'>8+</option>
@@ -80,9 +116,14 @@ const SearchSideBar = ({ getBootcampInRadius }) => {
 
         <div className='form-group'>
           <label> Budget</label>
-          <select className='custom-select mb-2'>
-            <option value='any' defaultValue>
-              Any
+          <select
+            className='custom-select mb-2'
+            name='averageCost'
+            value={averageCost}
+            onChange={onChangeFilter}
+          >
+            <option value='choose' defaultValue>
+              Choose
             </option>
             <option value='20000'>$20,000</option>
             <option value='15000'>$15,000</option>
@@ -105,6 +146,12 @@ const SearchSideBar = ({ getBootcampInRadius }) => {
 
 SearchSideBar.propTypes = {
   getBootcampInRadius: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
+  filteredBootcamps: PropTypes.func.isRequired,
 };
 
-export default connect(null, { getBootcampInRadius })(SearchSideBar);
+export default connect(null, {
+  getBootcampInRadius,
+  setAlert,
+  filteredBootcamps,
+})(SearchSideBar);

@@ -3,6 +3,8 @@ import {
   GET_SINGLE_BOOTCAMP,
   BOOTCAMP_ERROR,
   GET_BOOTCAMP_IN_RADIUS,
+  FITERED_BOOTCAMPS,
+  PAGINATED_BOOTCAMPS,
   CLEAR_BOOTCAMPS,
 } from './types';
 import axios from 'axios';
@@ -40,6 +42,36 @@ export const getBootcampInRadius = ({ zipcode, distance }) => async (
     );
     dispatch({
       type: GET_BOOTCAMP_IN_RADIUS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({ type: BOOTCAMP_ERROR });
+  }
+};
+
+export const filteredBootcamps = ({ averageRating, averageCost }) => async (
+  dispatch
+) => {
+  dispatch({ type: CLEAR_BOOTCAMPS });
+  try {
+    const res = await axios.get(
+      `/api/v1/bootcamps?averageRating[gte]=${averageRating}&averageCost[gte]=${averageCost}`
+    );
+    dispatch({
+      type: FITERED_BOOTCAMPS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({ type: BOOTCAMP_ERROR });
+  }
+};
+
+export const paginatedBootcamps = (pageNo) => async (dispatch) => {
+  dispatch({ type: CLEAR_BOOTCAMPS });
+  try {
+    const res = await axios.get(`/api/v1/bootcamps?page=${pageNo}`);
+    dispatch({
+      type: PAGINATED_BOOTCAMPS,
       payload: res.data,
     });
   } catch (err) {
