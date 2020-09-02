@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-const AuthLinks = ({ logout }) => {
+const AuthLinks = ({ auth: { user }, logout }) => {
   return (
     <ul className='navbar-nav ml-auto'>
       <li className='nav-item dropdown'>
@@ -16,9 +17,18 @@ const AuthLinks = ({ logout }) => {
           <i className='fas fa-user'></i> Account
         </a>
         <div className='dropdown-menu'>
-          <Link className='dropdown-item' to='/manage-bootcamp'>
-            Manage Bootcamp
-          </Link>
+          {user === null ? (
+            ''
+          ) : (
+            <Fragment>
+              {user.role === 'publisher' && (
+                <Link className='dropdown-item' to='/manage-bootcamp'>
+                  Manage Bootcamp
+                </Link>
+              )}
+            </Fragment>
+          )}
+
           <Link className='dropdown-item' to='/manage-reviews'>
             Manage Reviews
           </Link>
@@ -42,6 +52,11 @@ const AuthLinks = ({ logout }) => {
 
 AuthLinks.propTypes = {
   logout: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
-export default AuthLinks;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(AuthLinks);
