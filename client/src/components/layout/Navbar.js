@@ -27,7 +27,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
             Manage Account
           </Link>
           <div className='dropdown-divider'></div>
-          <Link className='dropdown-item' to='/login' onClick={(e) => logout()}>
+          <Link className='dropdown-item' to='/' onClick={(e) => logout()}>
             <i className='fas fa-sign-out-alt'></i> Logout
           </Link>
         </div>
