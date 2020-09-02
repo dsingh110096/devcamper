@@ -8,6 +8,7 @@ import {
   LOGOUT,
   LOGOUT_ERROR,
 } from './types';
+
 import { setAlert } from '../actions/alert';
 import axios from 'axios';
 import scrollToTop from '../utils/scrollToTop';
