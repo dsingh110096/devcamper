@@ -3,23 +3,38 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { getBootcampInRadius } from '../../actions/bootcamp';
+import { setAlert } from '../../actions/alert';
 
-const Landing = ({ isAuthenticated, getBootcampInRadius, history }) => {
+const Landing = ({
+  isAuthenticated,
+  getBootcampInRadius,
+  setAlert,
+  history,
+}) => {
   const [formData, setFormData] = useState({
     distance: '',
     zipcode: '',
   });
+
   const { distance, zipcode } = formData;
+
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
   const onSubmit = (e) => {
     e.preventDefault();
-    getBootcampInRadius({ zipcode, distance });
-    history.push(`/bootcamps/${zipcode}/${distance}`);
+    if (distance === '' || zipcode === '') {
+      setAlert('Please Provides zipcode and distance', 'danger');
+    } else {
+      getBootcampInRadius({ zipcode, distance });
+      history.push(`/bootcamps/${zipcode}/${distance}`);
+    }
   };
+
   if (isAuthenticated) {
     return <Redirect to='/bootcamps' />;
   }
+
   return (
     <section className='showcase'>
       <div className='dark-overlay'>
@@ -70,10 +85,13 @@ const Landing = ({ isAuthenticated, getBootcampInRadius, history }) => {
 Landing.propTypes = {
   getBootcampInRadius: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  setAlert: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { getBootcampInRadius })(Landing);
+export default connect(mapStateToProps, { getBootcampInRadius, setAlert })(
+  Landing
+);
