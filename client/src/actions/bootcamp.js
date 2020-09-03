@@ -4,7 +4,6 @@ import {
   BOOTCAMP_ERROR,
   GET_BOOTCAMP_IN_RADIUS,
   FITERED_BOOTCAMPS,
-  PAGINATED_BOOTCAMPS,
   CLEAR_BOOTCAMPS,
 } from './types';
 import axios from 'axios';
@@ -59,19 +58,6 @@ export const filteredBootcamps = ({ averageRating, averageCost }) => async (
     );
     dispatch({
       type: FITERED_BOOTCAMPS,
-      payload: res.data,
-    });
-  } catch (err) {
-    dispatch({ type: BOOTCAMP_ERROR });
-  }
-};
-
-export const paginatedBootcamps = (pageNo) => async (dispatch) => {
-  dispatch({ type: CLEAR_BOOTCAMPS });
-  try {
-    const res = await axios.get(`/api/v1/bootcamps?page=${pageNo}`);
-    dispatch({
-      type: PAGINATED_BOOTCAMPS,
       payload: res.data,
     });
   } catch (err) {
