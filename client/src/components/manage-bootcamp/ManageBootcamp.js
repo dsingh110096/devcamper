@@ -63,7 +63,6 @@ const ManageBootcamp = ({
 ManageBootcamp.propTypes = {
   bootcamp: PropTypes.object.isRequired,
   getAllBootcamps: PropTypes.func.isRequired,
-  setAlert: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
