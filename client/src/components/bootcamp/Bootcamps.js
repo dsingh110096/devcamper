@@ -23,6 +23,7 @@ const Bootcamps = ({
     }
   }, [getAllBootcamps, getBootcampInRadius, zipcode, distance, showSearchBar]);
 
+  //Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [bootcampsPerPage] = useState(3);
 
@@ -34,7 +35,7 @@ const Bootcamps = ({
       ? ''
       : bootcamps.data.slice(indexOfFirstBootcamp, indexOfLastBootcamp);
 
-  //change page
+  //Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (

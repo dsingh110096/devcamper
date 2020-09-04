@@ -16,6 +16,7 @@ const AddReview = ({ match, addReviewToBootcamp, history }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     addReviewToBootcamp(formData, match.params.bootcampId, history);
+    setFormData({ title: '', rating: '', text: '' });
   };
   return (
     <section className='container mt-5'>

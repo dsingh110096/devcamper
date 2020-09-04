@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { getBootcampInRadius, filteredBootcamps } from '../../actions/bootcamp';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setAlert } from '../../actions/alert';
-import scrollToTop from '../../utils/scrollToTop';
+import { getBootcampInRadius, filteredBootcamps } from '../../actions/bootcamp';
 
 const SearchSideBar = ({
   getBootcampInRadius,
@@ -30,7 +29,6 @@ const SearchSideBar = ({
   const onSubmit = (e) => {
     e.preventDefault();
     if (zipcode === '' || distance === '') {
-      scrollToTop();
       setAlert('Please provide zipcode and distance.', 'danger');
     } else {
       getBootcampInRadius({ zipcode, distance });
@@ -43,7 +41,6 @@ const SearchSideBar = ({
   const onSubmitFilter = (e) => {
     e.preventDefault();
     if (averageCost === '' || averageRating === '') {
-      scrollToTop();
       setAlert('Please choose rating and budget', 'danger');
     } else {
       filteredBootcamps({ averageRating, averageCost });

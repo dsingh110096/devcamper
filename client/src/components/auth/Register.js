@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
-import scrollToTop from '../../utils/scrollToTop';
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -21,7 +20,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (password !== password2) {
-      scrollToTop();
       setAlert('Password do not match', 'danger');
     } else {
       register({ name, email, password, role });

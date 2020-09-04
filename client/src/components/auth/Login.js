@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import scrollToTop from '../../utils/scrollToTop';
 import { setAlert } from '../../actions/alert';
 import { login } from '../../actions/auth';
 import { connect } from 'react-redux';
@@ -17,7 +16,6 @@ const Login = ({ setAlert, login, isAuthenticated }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (email === '' || password === '') {
-      scrollToTop();
       setAlert('Please provide email & password', 'danger');
     } else {
       login({ email, password });
