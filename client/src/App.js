@@ -20,6 +20,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import BootcampsInRadius from './components/bootcamp/BootcampsInRadius';
 import ManageBootcamp from './components/manage-bootcamp/ManageBootcamp';
+import AddBootcamp from './components/bootcamp-form/AddBootcamp';
 
 //Check if token in localStorage and set it to the header
 if (localStorage.token) {
@@ -58,6 +59,11 @@ function App() {
                 exact
                 path='/manage-bootcamp'
                 component={ManageBootcamp}
+              />
+              <PrivateRoute
+                exact
+                path='/add-bootcamp'
+                component={AddBootcamp}
               />
             </Switch>
           </section>

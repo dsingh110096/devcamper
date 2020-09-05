@@ -7,7 +7,7 @@ import {
   CLEAR_BOOTCAMPS,
 } from './types';
 import axios from 'axios';
-
+import { setAlert } from './alert';
 export const getAllBootcamps = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/v1/bootcamps');
@@ -31,6 +31,22 @@ export const getSingleBootcamp = (bootcampId) => async (dispatch) => {
   }
 };
 
+export const createBootcamp = (formData, history) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  try {
+    const res = await axios.post('/api/v1/bootcamps', formData, config);
+    dispatch({ type: GET_SINGLE_BOOTCAMP, payload: res.data });
+    history.push('/manage-bootcamp');
+  } catch (err) {
+    dispatch({ type: BOOTCAMP_ERROR });
+    dispatch(setAlert(err.response.data.error, 'danger'));
+  }
+};
+
 export const getBootcampInRadius = ({ zipcode, distance }) => async (
   dispatch
 ) => {
@@ -45,6 +61,7 @@ export const getBootcampInRadius = ({ zipcode, distance }) => async (
     });
   } catch (err) {
     dispatch({ type: BOOTCAMP_ERROR });
+    dispatch(setAlert(err.response.data.error, 'danger'));
   }
 };
 
