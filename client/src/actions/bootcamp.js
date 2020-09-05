@@ -38,8 +38,7 @@ export const createBootcamp = (formData, history) => async (dispatch) => {
     },
   };
   try {
-    const res = await axios.post('/api/v1/bootcamps', formData, config);
-    dispatch({ type: GET_SINGLE_BOOTCAMP, payload: res.data });
+    await axios.post('/api/v1/bootcamps', formData, config);
     history.push('/manage-bootcamp');
   } catch (err) {
     dispatch({ type: BOOTCAMP_ERROR });
