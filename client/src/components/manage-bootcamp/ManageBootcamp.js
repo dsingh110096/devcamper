@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getAllBootcamps } from '../../actions/bootcamp';
+import { Link } from 'react-router-dom';
 import BootcampDetails from './BootcampDetails';
 import Spinner from '../layout/Spinner';
 
@@ -25,26 +26,48 @@ const ManageBootcamp = ({
                 <Spinner />
               ) : (
                 <Fragment>
-                  {bootcamps.data
-                    .filter((bootcamp) => bootcamp.user === auth.user._id)
-                    .map((bootcamp) => (
-                      <BootcampDetails key={bootcamp._id} bootcamp={bootcamp} />
-                    ))}
+                  {bootcamps.data.filter(
+                    (bootcamp) => bootcamp.user === auth.user._id
+                  ).length === 0 ? (
+                    <Fragment>
+                      {' '}
+                      <p className='lead'>You have not yet added a bootcamp</p>
+                      <Link
+                        to='/add-bootcamp'
+                        className='btn btn-primary btn-block'
+                      >
+                        Add Bootcamp
+                      </Link>
+                    </Fragment>
+                  ) : (
+                    <Fragment>
+                      {bootcamps.data
+                        .filter((bootcamp) => bootcamp.user === auth.user._id)
+                        .map((bootcamp) => (
+                          <BootcampDetails
+                            key={bootcamp._id}
+                            bootcamp={bootcamp}
+                          />
+                        ))}
+                      <Link
+                        to='/add-bootcamp'
+                        className='btn btn-primary btn-block'
+                      >
+                        Edit Bootcamp Details
+                      </Link>
+                      <Link
+                        to='/manage-courses'
+                        className='btn btn-secondary btn-block'
+                      >
+                        Manage Courses
+                      </Link>
+                      <Link to='#!' className='btn btn-danger btn-block'>
+                        Remove Bootcamp
+                      </Link>
+                    </Fragment>
+                  )}
                 </Fragment>
               )}
-
-              <a href='add-bootcamp.html' className='btn btn-primary btn-block'>
-                Edit Bootcamp Details
-              </a>
-              <a
-                href='manage-courses.html'
-                className='btn btn-secondary btn-block'
-              >
-                Manage Courses
-              </a>
-              <a href='#!' className='btn btn-danger btn-block'>
-                Remove Bootcamp
-              </a>
               <p className='text-muted mt-5'>
                 * You can only add one bootcamp per account.
               </p>
